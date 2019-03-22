@@ -1,4 +1,4 @@
-[
+export const incidents = [
   {
     "id": "europe_HD_DE_TTL6000",
     "type": 1,
