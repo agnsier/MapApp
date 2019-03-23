@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactMapGL from 'react-map-gl';
-import { ACCESS_TOKEN } from '../api_key';
+import { ACCESS_TOKEN } from '../access_token';
 import { getIncidents, getViewports, changeViewPort } from '../actions';
 import { connect } from 'react-redux';
 import CustomMarker from './Marker';

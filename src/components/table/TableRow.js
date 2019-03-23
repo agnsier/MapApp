@@ -31,16 +31,18 @@ class TableRow extends Component {
           <td data-label="Delay">{`${this.getMinFromSec(incident.delay)} min`}</td>
         </tr>
         {expanded ? (
-          <td colSpan="5">
-            <span style={{ display: 'block' }}>
-              <span style={{ fontWeight: 'bold' }}>Accident details:</span>
-              {incident.details}
-            </span>
-            <span style={{ display: 'block' }}>
-              <span style={{ fontWeight: 'bold' }}>Accident magnitude:</span>
-              {MAGNITUDES[incident.magnitude]}
-            </span>
-          </td>
+          <tr>
+            <td colSpan="5">
+              <span style={{ display: 'block' }}>
+                <span style={{ fontWeight: 'bold' }}>Accident details:</span>
+                {incident.details}
+              </span>
+              <span style={{ display: 'block' }}>
+                <span style={{ fontWeight: 'bold' }}>Accident magnitude:</span>
+                {MAGNITUDES[incident.magnitude]}
+              </span>
+            </td>
+          </tr>
         ) : null}
       </React.Fragment>
     );
