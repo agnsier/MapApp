@@ -1,46 +1,49 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import {incidentsMap} from '../../utils/incidentsMap'
-
-// const row = (x, i, headers, onClick) =>
-//     <tr key={`TableRow-${i}`} onClick={onClick}>
-//         {headers.map((header, k) =>
-//             <td key={`TableRowData-${k}`}>
-//                 {x[header]}
-//             </td>
-//         )}
-//     </tr>;
+import { INCIDENTS } from '../../utils/incidents';
+import { MAGNITUDES } from '../../utils/magnitude';
+import { FaAngleDown } from 'react-icons/fa';
 
 class TableRow extends Component {
+  isExpanded = incident => {
+    return this.props.selectedIncidents.includes(incident.id);
+  };
 
-    isExpanded = (incident) => {
-        return this.props.selectedIncidents.includes(incident.id)
-    };
+  getMinFromSec = seconds => {
+    return parseInt(seconds / 60);
+  };
 
-    getMinFromSec = (seconds) => {
-        return parseInt(seconds/60)
-    };
-
-    render() {
-        const incident = this.props.data;
-        // TODO zmień te h4
-        return (
-            <React.Fragment>
-
-                <tr onClick={() => this.props.onClick(incident)}>
-                    <td data-label="Accident Type">{incidentsMap[incident.type]}</td>
-                    <td data-label="From">{incident.from}</td>
-                    <td data-label="To">{incident.to}</td>
-                    <td data-label="Delay">{`${this.getMinFromSec(incident.delay)} min`}</td>
-                </tr>
-                {this.isExpanded(incident) === true ? (
-                    <td colSpan="4">
-                    <h4>Accident details: {incident.details}</h4>
-                    <h4>Accident magnitude: {incident.magnitude}</h4>
-                    </td>
-                    ) : null}
-            </React.Fragment>
-        )
-    }
+  render() {
+    const incident = this.props.data;
+    const expanded = this.isExpanded(incident);
+    return (
+      <React.Fragment>
+        <tr
+          onClick={() => this.props.onClick(incident)}
+          style={{ backgroundColor: expanded ? '#e7e7e7' : '#fafff8' }}
+        >
+          <td>
+            <FaAngleDown size={30} />
+          </td>
+          <td data-label="Accident Type">{INCIDENTS[incident.type]}</td>
+          <td data-label="From">{incident.from}</td>
+          <td data-label="To">{incident.to}</td>
+          <td data-label="Delay">{`${this.getMinFromSec(incident.delay)} min`}</td>
+        </tr>
+        {expanded ? (
+          <td colSpan="5">
+            <span style={{ display: 'block' }}>
+              <span style={{ fontWeight: 'bold' }}>Accident details:</span>
+              {incident.details}
+            </span>
+            <span style={{ display: 'block' }}>
+              <span style={{ fontWeight: 'bold' }}>Accident magnitude:</span>
+              {MAGNITUDES[incident.magnitude]}
+            </span>
+          </td>
+        ) : null}
+      </React.Fragment>
+    );
+  }
 }
 export default TableRow;
